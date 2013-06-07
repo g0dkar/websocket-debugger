@@ -54,11 +54,11 @@
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
 					<descriptorRefs>
-						<descriptorRef>runnable</descriptorRef>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>fully.qualified.MainClass</mainClass>
+							<mainClass>com.g0dkar.websocket.debugger.CoberturaClient</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
@@ -90,4 +90,11 @@
 			<url>http://github.com/g0dkar/websocket-debugger/blob/master/LICENSE</url>
 		</license>
 	</licenses>
+	<dependencies>
+		<dependency>
+			<groupId>org.java-websocket</groupId>
+			<artifactId>Java-WebSocket</artifactId>
+			<version>1.3.1-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
 </project>
