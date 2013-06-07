@@ -154,16 +154,16 @@ public class CoberturaClient extends JFrame implements ActionListener {
 	
 	public static void main(String[] args) {
 //		WebSocketImpl.DEBUG = true;
-		String location;
-		if (args.length != 0) {
-			location = args[0];
-			System.out.println("Default server url specified: \'" + location + "\'");
-		} else {
-			location = "ws://localhost:1337";
-			System.out.println("Default server url not specified: defaulting to \'" + location + "\'");
-		}
-		new CoberturaClient(location);
-		// System.out.println(System.currentTimeMillis());
+//		String location;
+//		if (args.length != 0) {
+//			location = args[0];
+//			System.out.println("Default server url specified: \'" + location + "\'");
+//		} else {
+//			location = "ws://localhost:1337";
+//			System.out.println("Default server url not specified: defaulting to \'" + location + "\'");
+//		}
+//		new CoberturaClient(location);
+		System.out.println(System.currentTimeMillis());
 	}
 	
 }
