@@ -2,10 +2,14 @@ package com.g0dkar.websocket.debugger;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Desktop;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.net.URI;
 import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
@@ -22,7 +26,7 @@ import javax.swing.WindowConstants;
  * Janela "Sobre".
  * 
  * @author g0dkar
- *
+ * 
  */
 public class WebSocketsSobreWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -34,6 +38,11 @@ public class WebSocketsSobreWindow extends JFrame {
 		initComponents();
 	}
 	
+	/**
+	 * Inicializa TUDO. Chame apenas uma vez.
+	 * 
+	 * @author NetBeans :P
+	 */
 	private void initComponents() {
 		labelIcon = new JLabel();
 		labelTitle = new JLabel();
@@ -42,7 +51,7 @@ public class WebSocketsSobreWindow extends JFrame {
 		btnClose = new JButton();
 		btnCredits = new JButton();
 		
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 		setTitle(strings.getString("window.about.title"));
 		setResizable(false);
 		
@@ -73,8 +82,20 @@ public class WebSocketsSobreWindow extends JFrame {
 		});
 		
 		btnClose.setText(strings.getString("window.about.btnClose"));
+		btnClose.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnClose();
+			}
+		});
 		
+		// No credits for now! Heh...
+		btnCredits.setVisible(false);
 		btnCredits.setText(strings.getString("window.about.btnCredits"));
+		btnCredits.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnCredits();
+			}
+		});
 		
 		final GroupLayout layout = new GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
@@ -85,14 +106,72 @@ public class WebSocketsSobreWindow extends JFrame {
 	}
 	
 	/**
+	 * Tenta abrir um link no navegador. Exceções podem ocorrer.
+	 * 
+	 * @param link Link que será aberto
+	 * 
+	 * @throws Exception Não foi possível abrir o link.
+	 */
+	private void openLink(String link) throws Exception {
+		final Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+		
+		if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+			desktop.browse(new URI("http://github.com/g0dkar/websocket-debugger"));
+		}
+	}
+	
+	/**
+	 * Tenta abrir um link no navegador "na brutalidade", hehe.
+	 * 
+	 * @param link Link que será aberto
+	 * 
+	 * @throws Exception Realmente não foi possível abrir o link...
+	 */
+	private void openLinkBruteForce(String link) throws Exception {
+		try {
+			openLink(link);
+		} catch (Exception e) {
+			final Runtime runtime = Runtime.getRuntime();
+			
+			// Windows
+			try {
+				runtime.exec("explorer " + link);
+			} catch (Exception e1) {
+				// Linux
+				try {
+					runtime.exec("xdg-open " + link);
+				} catch (Exception e2) {
+					// OSX
+					// Se rolar uma exception aqui, "não deu..."
+					runtime.exec("open " + link);
+				}
+			}
+		}
+	}
+	
+	/**
 	 * Ao clicar no Link (tenta abrir o link usando o navegador default)
 	 */
 	private void labelLink() {
 		try {
-			Runtime.getRuntime().exec("http://github.com/g0dkar/websocket-debugger");
-		} catch (IOException e) {
-			e.printStackTrace();
+			openLinkBruteForce("http://github.com/g0dkar/websocket-debugger");
+		} catch (Exception e) {
+			// Sorry but are you running this on a rock or something?
 		}
+	}
+	
+	/**
+	 * Ao clicar no botão dos Créditos
+	 */
+	private void btnCredits() {
+		setVisible(false);
+	}
+	
+	/**
+	 * Ao clicar no botão de fechar
+	 */
+	private void btnClose() {
+		setVisible(false);
 	}
 	
 	private JButton btnClose;
