@@ -3,6 +3,7 @@ package com.g0dkar.websocket.debugger;
 import java.net.URI;
 import java.nio.channels.NotYetConnectedException;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.java_websocket.drafts.Draft;
@@ -22,7 +23,11 @@ public class WebSocketClient extends org.java_websocket.client.WebSocketClient {
 	private final WebSocketsDebuggerWindow window;
 	
 	public WebSocketClient(final WebSocketsDebuggerWindow window, final URI serverUri, final Draft draft) {
-		super(serverUri, draft);
+		this(window, serverUri, draft, null);
+	}
+	
+	public WebSocketClient(final WebSocketsDebuggerWindow window, final URI serverUri, final Draft draft, final Map<String, String> headers) {
+		super(serverUri, draft, headers, 0);
 		this.window = window;
 		strings = ResourceBundle.getBundle("strings");
 	}
@@ -32,19 +37,19 @@ public class WebSocketClient extends org.java_websocket.client.WebSocketClient {
 	 * 
 	 * @param texto Texto a ser incluso no console.
 	 */
-	private void console(String texto) {
+	private void console(final String texto) {
 		window.console(texto);
 	}
 	
 	/**
 	 * Chamado após uma conexão ser feita com sucesso junto ao Servidor.
 	 */
-	public void onOpen(ServerHandshake handshakedata) {
+	public void onOpen(final ServerHandshake handshakedata) {
 		window.onOpen(handshakedata);
 		
 		console(strings.getString("log.connectionStarted") + " " + handshakedata.getHttpStatus() + " " + handshakedata.getHttpStatusMessage());
-		for (Iterator<String> iterator = handshakedata.iterateHttpFields(); iterator.hasNext();) {
-			String field = iterator.next();
+		for (final Iterator<String> iterator = handshakedata.iterateHttpFields(); iterator.hasNext();) {
+			final String field = iterator.next();
 			console(strings.getString("log.httpHeader") + " " + field + ": " + handshakedata.getFieldValue(field));
 		}
 	}
@@ -52,7 +57,7 @@ public class WebSocketClient extends org.java_websocket.client.WebSocketClient {
 	/**
 	 * Chamado quando uma mensagem é recebida do servidor.
 	 */
-	public void onMessage(String message) {
+	public void onMessage(final String message) {
 		window.onMessage(message);
 		console(message);
 	}
@@ -60,7 +65,7 @@ public class WebSocketClient extends org.java_websocket.client.WebSocketClient {
 	/**
 	 * Chamado após a conexão com o servidor ter sido finalizada.
 	 */
-	public void onClose(int code, String reason, boolean remote) {
+	public void onClose(final int code, final String reason, final boolean remote) {
 		window.onClose(code, reason, remote);
 		console(strings.getString("log.connectionClosed"));
 		console(strings.getString("log.connectionClosed.code") + " " + code);
@@ -71,14 +76,14 @@ public class WebSocketClient extends org.java_websocket.client.WebSocketClient {
 	/**
 	 * Chamado quando uma exceção interna ao {@link org.java_websocket.client.WebSocketClient} ocorre.
 	 */
-	public void onError(Exception ex) {
+	public void onError(final Exception ex) {
 		window.onError(ex);
 	}
 	
 	/**
 	 * Chamado para enviar texto ao servidor.
 	 */
-	public void send(String text) throws NotYetConnectedException {
+	public void send(final String text) throws NotYetConnectedException {
 		console(strings.getString("log.sendPrefix.text") + text);
 		super.send(text);
 	}
@@ -86,7 +91,7 @@ public class WebSocketClient extends org.java_websocket.client.WebSocketClient {
 	/**
 	 * Chamado para enviar dados brutos ao servidor.
 	 */
-	public void send(byte[] data) throws NotYetConnectedException {
+	public void send(final byte[] data) throws NotYetConnectedException {
 		console(strings.getString("log.sendPrefix.bytes") + new String(data));
 		super.send(data);
 	}

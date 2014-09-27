@@ -15,6 +15,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
@@ -113,7 +115,7 @@ public class WebSocketsDebuggerWindow extends JFrame {
 		
 		try {
 			setIconImage(ImageIO.read(getClass().getResourceAsStream("/terminal.png")));
-		} catch (IOException e1) {
+		} catch (final IOException e1) {
 			e1.printStackTrace();
 		}
 		
@@ -124,14 +126,14 @@ public class WebSocketsDebuggerWindow extends JFrame {
 		editServidor.setText(strings.getString("window.main.server"));
 		editServidor.setToolTipText(strings.getString("window.main.server.tooltip"));
 		editServidor.addKeyListener(new KeyAdapter() {
-			public void keyPressed(KeyEvent e) {
+			public void keyPressed(final KeyEvent e) {
 				editServidorKeyPressed(e);
 			}
 		});
 		
 		btnConectar.setText(strings.getString("window.main.btnConnect.connect"));
 		btnConectar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+			public void actionPerformed(final ActionEvent evt) {
 				btnConectar();
 			}
 		});
@@ -141,7 +143,7 @@ public class WebSocketsDebuggerWindow extends JFrame {
 		editMensagem.setText(strings.getString("window.main.command"));
 		editMensagem.setWrapStyleWord(true);
 		editMensagem.addKeyListener(new KeyAdapter() {
-			public void keyPressed(KeyEvent e) {
+			public void keyPressed(final KeyEvent e) {
 				editMensagemKeyPressed(e);
 			}
 		});
@@ -150,7 +152,7 @@ public class WebSocketsDebuggerWindow extends JFrame {
 		btnEnviar.setText(strings.getString("window.main.btnSend"));
 		btnEnviar.setEnabled(false);
 		btnEnviar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+			public void actionPerformed(final ActionEvent evt) {
 				btnEnviar();
 			}
 		});
@@ -163,7 +165,7 @@ public class WebSocketsDebuggerWindow extends JFrame {
 		comboDraft.setSelectedItem("Draft 17");
 		comboDraft.setToolTipText(strings.getString("window.main.comboDraft.tooltip"));
 		
-		GroupLayout panelSuperiorLayout = new GroupLayout(panelSuperior);
+		final GroupLayout panelSuperiorLayout = new GroupLayout(panelSuperior);
 		panelSuperior.setLayout(panelSuperiorLayout);
 		panelSuperiorLayout.setHorizontalGroup(panelSuperiorLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(GroupLayout.Alignment.TRAILING, panelSuperiorLayout.createSequentialGroup().addContainerGap().addGroup(panelSuperiorLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(scrollPane1, GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE).addGroup(panelSuperiorLayout.createSequentialGroup().addComponent(editServidor).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(comboDraft, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(panelSuperiorLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false).addComponent(checkEnter, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(btnEnviar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(btnConectar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)).addContainerGap()));
 		panelSuperiorLayout.setVerticalGroup(panelSuperiorLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(panelSuperiorLayout.createSequentialGroup().addContainerGap().addGroup(panelSuperiorLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(editServidor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(btnConectar).addComponent(comboDraft, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(panelSuperiorLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(scrollPane1, GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE).addGroup(panelSuperiorLayout.createSequentialGroup().addComponent(btnEnviar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(checkEnter))).addContainerGap()));
@@ -175,7 +177,7 @@ public class WebSocketsDebuggerWindow extends JFrame {
 		editConsole.setRows(5);
 		scrollPane2.setViewportView(editConsole);
 		
-		GroupLayout panelInferiorLayout = new GroupLayout(panelInferior);
+		final GroupLayout panelInferiorLayout = new GroupLayout(panelInferior);
 		panelInferior.setLayout(panelInferiorLayout);
 		panelInferiorLayout.setHorizontalGroup(panelInferiorLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(panelInferiorLayout.createSequentialGroup().addContainerGap().addComponent(scrollPane2, GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE).addContainerGap()));
 		panelInferiorLayout.setVerticalGroup(panelInferiorLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(panelInferiorLayout.createSequentialGroup().addContainerGap().addComponent(scrollPane2, GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE).addContainerGap()));
@@ -187,7 +189,7 @@ public class WebSocketsDebuggerWindow extends JFrame {
 		menuitemSalvarLog.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
 		menuitemSalvarLog.setText(strings.getString("window.main.menu.file.save"));
 		menuitemSalvarLog.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+			public void actionPerformed(final ActionEvent evt) {
 				menuitemSalvarLog();
 			}
 		});
@@ -196,7 +198,7 @@ public class WebSocketsDebuggerWindow extends JFrame {
 		menuitemSalvarLogComo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.SHIFT_MASK | InputEvent.CTRL_MASK));
 		menuitemSalvarLogComo.setText(strings.getString("window.main.menu.file.saveAs"));
 		menuitemSalvarLogComo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+			public void actionPerformed(final ActionEvent evt) {
 				menuitemSalvarLogComo();
 			}
 		});
@@ -206,7 +208,7 @@ public class WebSocketsDebuggerWindow extends JFrame {
 		menuitemSair.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
 		menuitemSair.setText(strings.getString("window.main.menu.file.quit"));
 		menuitemSair.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+			public void actionPerformed(final ActionEvent evt) {
 				menuitemSair();
 			}
 		});
@@ -219,7 +221,7 @@ public class WebSocketsDebuggerWindow extends JFrame {
 		menuitemLimparLog.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.CTRL_MASK));
 		menuitemLimparLog.setText(strings.getString("window.main.menu.edit.clear"));
 		menuitemLimparLog.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+			public void actionPerformed(final ActionEvent evt) {
 				menuitemLimparLog();
 			}
 		});
@@ -228,7 +230,7 @@ public class WebSocketsDebuggerWindow extends JFrame {
 		menuitemCopiarLog.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.SHIFT_MASK | InputEvent.CTRL_MASK));
 		menuitemCopiarLog.setText(strings.getString("window.main.menu.edit.copy"));
 		menuitemCopiarLog.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+			public void actionPerformed(final ActionEvent evt) {
 				menuitemCopiarLog();
 			}
 		});
@@ -237,7 +239,7 @@ public class WebSocketsDebuggerWindow extends JFrame {
 		menuitemRecortarLog.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.SHIFT_MASK | InputEvent.CTRL_MASK));
 		menuitemRecortarLog.setText(strings.getString("window.main.menu.edit.cut"));
 		menuitemRecortarLog.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+			public void actionPerformed(final ActionEvent evt) {
 				menuitemRecortarLog();
 			}
 		});
@@ -246,7 +248,7 @@ public class WebSocketsDebuggerWindow extends JFrame {
 		
 		menuitemQuebrarLinhas.setText(strings.getString("window.main.menu.edit.wordwrap"));
 		menuitemQuebrarLinhas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+			public void actionPerformed(final ActionEvent evt) {
 				menuitemQuebrarLinhas();
 			}
 		});
@@ -258,7 +260,7 @@ public class WebSocketsDebuggerWindow extends JFrame {
 		
 		menuitemSobre.setText(strings.getString("window.main.menu.help.about"));
 		menuitemSobre.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+			public void actionPerformed(final ActionEvent evt) {
 				menuitemSobre();
 			}
 		});
@@ -276,7 +278,7 @@ public class WebSocketsDebuggerWindow extends JFrame {
 		pack();
 	}
 	
-	public void console(String texto) {
+	public void console(final String texto) {
 		editConsole.append(texto);
 		editConsole.append("\n");
 		editConsole.setCaretPosition(editConsole.getDocument().getLength());
@@ -285,7 +287,7 @@ public class WebSocketsDebuggerWindow extends JFrame {
 	/**
 	 * Chamado pelo {@link WebSocketClient cliente} quando uma conexão é aberta.
 	 */
-	public void onOpen(ServerHandshake handshakedata) {
+	public void onOpen(final ServerHandshake handshakedata) {
 		editServidor.setEnabled(false);
 		comboDraft.setEnabled(false);
 		btnConectar.setEnabled(true);
@@ -299,7 +301,7 @@ public class WebSocketsDebuggerWindow extends JFrame {
 	 * Chamado quando chegam dados do servidor.
 	 * @param message
 	 */
-	public void onMessage(String message) {
+	public void onMessage(final String message) {
 	}
 	
 	/**
@@ -309,7 +311,7 @@ public class WebSocketsDebuggerWindow extends JFrame {
 	 * @param reason Motivo do fechamento
 	 * @param remote A conexão foi fechada pelo cliente ou pelo servidor?
 	 */
-	public void onClose(int code, String reason, boolean remote) {
+	public void onClose(final int code, final String reason, final boolean remote) {
 		editServidor.setEnabled(true);
 		comboDraft.setEnabled(true);
 		btnConectar.setEnabled(true);
@@ -324,7 +326,7 @@ public class WebSocketsDebuggerWindow extends JFrame {
 	 * Chamado quando ocorre uma {@link Exception}.
 	 * @param ex {@link Exception} que aconteceu.
 	 */
-	public void onError(Exception ex) {
+	public void onError(final Exception ex) {
 		console(strings.getString("log.exception"));
 		
 		final ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
@@ -340,7 +342,7 @@ public class WebSocketsDebuggerWindow extends JFrame {
 				editServidor.setEnabled(false);
 				comboDraft.setEnabled(false);
 				
-				String selectedDraft = (String) comboDraft.getSelectedItem();
+				final String selectedDraft = (String) comboDraft.getSelectedItem();
 				Draft draft = null;
 				
 				if ("Draft 10".equals(selectedDraft)) {
@@ -359,9 +361,11 @@ public class WebSocketsDebuggerWindow extends JFrame {
 					draft = new Draft_76();
 				}
 				
+				final Map<String, String> headers = new HashMap<String, String>(1);
+				headers.put("Origin", "localhost");
 				client = new WebSocketClient(this, new URI(editServidor.getText()), draft);
 				client.connect();
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				onError(e);
 				client = null;
 				editServidor.setEnabled(true);
@@ -375,7 +379,7 @@ public class WebSocketsDebuggerWindow extends JFrame {
 			try {
 				client.closeBlocking();
 				client = null;
-			} catch (InterruptedException e) {
+			} catch (final InterruptedException e) {
 				onError(e);
 			}
 		}
@@ -391,7 +395,7 @@ public class WebSocketsDebuggerWindow extends JFrame {
 	 * Quando uma tecla é pressionada no edit do servidor. Enter = Conectar.
 	 * @param evt {@link KeyEvent} correspondente.
 	 */
-	private void editServidorKeyPressed(KeyEvent evt) {
+	private void editServidorKeyPressed(final KeyEvent evt) {
 		if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
 			btnConectar();
 			evt.consume();
@@ -404,7 +408,7 @@ public class WebSocketsDebuggerWindow extends JFrame {
 	 * 
 	 * @param evt {@link KeyEvent} correspondente.
 	 */
-	private void editMensagemKeyPressed(KeyEvent evt) {
+	private void editMensagemKeyPressed(final KeyEvent evt) {
 		if (evt.getKeyCode() == KeyEvent.VK_ENTER && checkEnter.isSelected()) {
 			btnEnviar();
 			evt.consume();
@@ -425,7 +429,7 @@ public class WebSocketsDebuggerWindow extends JFrame {
 				fileWriter.write(editConsole.getText());
 				fileWriter.flush();
 				fileWriter.close();
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				e.printStackTrace();
 			}
 		}
@@ -467,7 +471,7 @@ public class WebSocketsDebuggerWindow extends JFrame {
 			sobre.dispose();
 			setVisible(false);
 			dispose();
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			System.exit(0);
 		}
 	}
@@ -520,11 +524,11 @@ public class WebSocketsDebuggerWindow extends JFrame {
 	/**
 	 * Inicia a execução do programa.
 	 */
-	public static void main(String args[]) {
+	public static void main(final String args[]) {
 		try {
 			// Tenta usar o Look and Feel do S.O. atual
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception ex) {
+		} catch (final Exception ex) {
 			// No fucks given...
 		}
 		
@@ -533,7 +537,7 @@ public class WebSocketsDebuggerWindow extends JFrame {
 			public void run() {
 				try {
 					new WebSocketsDebuggerWindow().setVisible(true);
-				} catch (Exception e) {
+				} catch (final Exception e) {
 					JOptionPane.showMessageDialog(null, "Erro ao iniciar programa. Finalizando.\n\nErro: " + e.getClass().getCanonicalName() + " (mensagem: " + e.getLocalizedMessage() + ")", "Erro na Inicialização", JOptionPane.ERROR_MESSAGE);
 					System.exit(0);
 				}
