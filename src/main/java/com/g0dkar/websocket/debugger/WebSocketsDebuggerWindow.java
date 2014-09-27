@@ -363,7 +363,7 @@ public class WebSocketsDebuggerWindow extends JFrame {
 				
 				final Map<String, String> headers = new HashMap<String, String>(1);
 				headers.put("Origin", "localhost");
-				client = new WebSocketClient(this, new URI(editServidor.getText()), draft);
+				client = new WebSocketClient(this, new URI(editServidor.getText()), draft, headers);
 				client.connect();
 			} catch (final Exception e) {
 				onError(e);
